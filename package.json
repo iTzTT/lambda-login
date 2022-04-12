@@ -9,12 +9,23 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "lodash": "^4.17.21"
+    "aws-sdk": "^2.1113.0",
+    "knex": "^1.0.6",
+    "lodash": "^4.17.21",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.93",
     "@types/lodash": "^4.14.181",
     "@types/node": "^17.0.23",
     "@vercel/ncc": "^0.33.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iTzTT/lambda-login.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iTzTT/lambda-login/issues"
+  },
+  "homepage": "https://github.com/iTzTT/lambda-login#readme"
 }
