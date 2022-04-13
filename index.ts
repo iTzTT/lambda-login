@@ -28,6 +28,7 @@ const knex = require('knex')({
 const api = require('lambda-api')();
 
 api.get('/users', async (req, res) => {
+    console.log('this is the req', req);
     let user = await knex.select('*').from('User');
     return { status: 'OK', body: JSON.stringify(user) }
 });
@@ -36,7 +37,7 @@ api.get('/test', async (req, res) => {
     return { status: 'OK', body: req }
 });
 
-export const handler: Handler = async (event, context) : Promise<APIGatewayProxyResultV2> => {   
+export const handler: Handler = async (event, context) => {   
     // try {
     //     // console.log('event', event.httpMethod);
     //     // // await knex('User').select('UserId');
