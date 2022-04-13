@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResultV2, Handler } from "aws-lamb
 import * as _ from 'lodash';
 import * as AWS from 'aws-sdk';
 import { Knex } from 'knex';
+import { json } from "stream/consumers";
 // AWS.config.update({region: 'us-east-1'});
 
 const host = 'welldb.cmrswdjikbhu.us-east-1.rds.amazonaws.com';
@@ -24,22 +25,35 @@ const knex = require('knex')({
     connection
   });
 
+const api = require('lambda-api')();
 
-export const handler: Handler = async (event: APIGatewayProxyEvent) : Promise<APIGatewayProxyResultV2> => {   
-    try {
-        console.log('event', event.httpMethod);
-        // await knex('User').select('UserId');
-        let user = await knex.select('*').from('User');
-        const response = {
-            statusCode: 200,
-            body: JSON.stringify(user)
-        };
-        return response;
-    } 
-    catch(err) {
-        return {
-            statusCode: 500,
-            body: err
-        }
-    }
+api.get('/users', async (req, res) => {
+    let user = await knex.select('*').from('User');
+    return { status: 'OK', body: JSON.stringify(user) }
+});
+
+api.get('/test', async (req, res) => {
+    return { status: 'OK', body: req }
+});
+
+export const handler: Handler = async (event, context) : Promise<APIGatewayProxyResultV2> => {   
+    // try {
+    //     // console.log('event', event.httpMethod);
+    //     // // await knex('User').select('UserId');
+    //     // let user = await knex.select('*').from('User');
+    //     // const response = {
+    //     //     statusCode: 200,
+    //     //     body: JSON.stringify(user)
+    //     // };
+    //     // return response;
+
+    // } 
+    // catch(err) {
+    //     return {
+    //         statusCode: 500,
+    //         body: err
+    //     }
+    // }
+
+    return await api.run(event, context);
 };
