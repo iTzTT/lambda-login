@@ -7,11 +7,13 @@ import { Knex } from 'knex';
 const host = 'welldb.cmrswdjikbhu.us-east-1.rds.amazonaws.com';
 const user = 'admin';
 const password = 'wellplayed';
+const port = 3306;
 const database = 'welldb';
 
 const connection = {
     ssl: { rejectUnauthorized: false },
     host,
+    port,
     user,
     password,
     database
@@ -26,7 +28,8 @@ const knex = require('knex')({
 export const handler: Handler = async (event: APIGatewayProxyEvent) : Promise<APIGatewayProxyResultV2> => {   
     try {
         console.log('event', event.httpMethod);
-        await knex('User').select('UserId');
+        // await knex('User').select('UserId');
+        knex.select('UserId').from('dbo.User');
         const response = {
             statusCode: 200,
             body: JSON.stringify('Hello from Lambda 23232323!'),
