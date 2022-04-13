@@ -17,4 +17,19 @@ jobs:
         env:
           CI: true
         run: |
-          npm ci  
+          npm ci
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: deploy
+        run: |
+          npx ncc build index.ts
+          zip -j deploy.zip ./dist/*
+          aws lambda update-function-code --function-name=well-project --zip-file=fileb://deploy.zip
+
+        # build /w ncc 
+        # zip
+        # aws cli - deploy code
