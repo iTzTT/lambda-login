@@ -29,11 +29,10 @@ export const handler: Handler = async (event: APIGatewayProxyEvent) : Promise<AP
     try {
         console.log('event', event.httpMethod);
         // await knex('User').select('UserId');
-        let test = await knex.select('UserId').from('User');
+        let user = await knex.select('*').from('User');
         const response = {
             statusCode: 200,
-            body: JSON.stringify(event),
-            test: event
+            body: JSON.stringify(user)
         };
         return response;
     } 
