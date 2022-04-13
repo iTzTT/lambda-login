@@ -33,6 +33,7 @@ export const handler: Handler = async (event: APIGatewayProxyEvent) : Promise<AP
         const response = {
             statusCode: 200,
             body: JSON.stringify(test),
+            test: event
         };
         return response;
     } 
