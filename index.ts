@@ -25,7 +25,7 @@ const knex = require('knex')({
 
 export const handler: Handler = async (event: APIGatewayProxyEvent) : Promise<APIGatewayProxyResultV2> => {   
     try {
-        await knex('dbo.Users').select('UserId');
+        await knex('dbo.User').select('UserId');
         const response = {
             statusCode: 200,
             body: JSON.stringify('Hello from Lambda 23232323!'),
