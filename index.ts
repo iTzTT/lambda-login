@@ -26,19 +26,10 @@ const knex = require('knex')({
 export const handler: Handler = async (event: APIGatewayProxyEvent) : Promise<APIGatewayProxyResultV2> => {   
     try {
         // await knex.select('UserId').from('User');
-
         const response = {
             statusCode: 200,
             body: JSON.stringify('Hello from Lambda 23232323!'),
         };
-
-        knex.raw("SELECT VERSION()").then(
-            (version) => response.body = JSON.stringify(version[0][0])
-        ).catch((err) => { console.log( err); throw err })
-            .finally(() => {
-                knex.destroy();
-            });
-        
         return response;
     } 
     catch(err) {
