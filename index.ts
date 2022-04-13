@@ -8,7 +8,7 @@ const host = 'welldb.cmrswdjikbhu.us-east-1.rds.amazonaws.com';
 const user = 'admin';
 const password = 'wellplayed';
 const port = 3306;
-const database = 'welldb';
+const database = 'dbo';
 
 const connection = {
     ssl: { rejectUnauthorized: false },
@@ -29,7 +29,7 @@ export const handler: Handler = async (event: APIGatewayProxyEvent) : Promise<AP
     try {
         console.log('event', event.httpMethod);
         // await knex('User').select('UserId');
-        let test = await knex.select('UserId').from('dbo.User');
+        let test = await knex.select('UserId').from('User');
         const response = {
             statusCode: 200,
             body: JSON.stringify(test),
