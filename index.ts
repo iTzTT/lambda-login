@@ -40,7 +40,7 @@ const knex = require('knex')({
 
 export const handler: Handler = async (event, context) => {   
     try {
-        console.log('event', event.httpMethod);
+        console.log('PATH', event['path']);
         // await knex('User').select('UserId');
         let user = await knex.select('*').from('User');
         const response = {
