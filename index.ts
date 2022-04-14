@@ -45,8 +45,8 @@ export const handler: Handler = async (event, context) => {
         let user = await knex.select('*').from('User');
         const response = {
             statusCode: 200,
-            body: JSON.stringify(user)
-        };
+            body: JSON.stringify(user) + ' - ' + JSON.stringify(event)
+         };
         return response;
 
     } 
