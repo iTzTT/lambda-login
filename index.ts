@@ -25,36 +25,37 @@ const knex = require('knex')({
     connection
   });
 
-const api = require('lambda-api')();
+// const app = require('lambda-api')()
 
-api.get('/users', async (req, res) => {
-    console.log('this is the req', req);
-    let user = await knex.select('*').from('User');
-    return { status: 'OK', body: JSON.stringify(user) }
-});
 
-api.get('/test', async (req, res) => {
-    return { status: 'OK', body: req }
-});
+// app.get('/users', async (req, res) => {
+//     console.log('this is the req', req);
+//     let user = await knex.select('*').from('User');
+//     return { status: 'OK', body: JSON.stringify(user) }
+// });
+
+// app.get('/test', async (req, res) => {
+//     return { status: 'OK', body: req }
+// });
 
 export const handler: Handler = async (event, context) => {   
-    // try {
-    //     // console.log('event', event.httpMethod);
-    //     // // await knex('User').select('UserId');
-    //     // let user = await knex.select('*').from('User');
-    //     // const response = {
-    //     //     statusCode: 200,
-    //     //     body: JSON.stringify(user)
-    //     // };
-    //     // return response;
+    try {
+        console.log('event', event.httpMethod);
+        // await knex('User').select('UserId');
+        let user = await knex.select('*').from('User');
+        const response = {
+            statusCode: 200,
+            body: JSON.stringify(user)
+        };
+        return response;
 
-    // } 
-    // catch(err) {
-    //     return {
-    //         statusCode: 500,
-    //         body: err
-    //     }
-    // }
+    } 
+    catch(err) {
+        return {
+            statusCode: 500,
+            body: err
+        }
+    }
 
-    return await api.run(event, context);
+    // return await app.run(event, context);
 };

@@ -1,0 +1,10 @@
+# Functions
+functions:
+  serverless-api-sample:
+    name: ${self:service}-${self:provider.stage}-well-project
+    handler: handler.router
+    timeout: 30
+    events:
+      - http:
+          path: 'v1/{proxy+}'
+          method: any
