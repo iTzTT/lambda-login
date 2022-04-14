@@ -43,6 +43,15 @@ export const handler: Handler = async (event, context) => {
         console.log('PATH', event['path']);
         // await knex('User').select('UserId');
         let user = await knex.select('*').from('User');
+        switch(event.rawPath) {
+            case '/dev/user':
+                return userMethods(event);
+            case '/dev/company':
+                return companyMethods(event);
+            default:
+                console.log('test');
+        }
+
         const response = {
             statusCode: 200,
             body: JSON.stringify(user) + ' - ' + JSON.stringify(event)
@@ -59,3 +68,21 @@ export const handler: Handler = async (event, context) => {
 
     // return await app.run(event, context);
 };
+
+function userMethods(event: any) {
+    let response = {
+        statusCode: 200,
+        body: 'User Works'
+    };
+
+    return response;
+}
+
+function companyMethods(event: any) {
+    let response = {
+        statusCode: 200,
+        body: 'Company Works'
+    };
+
+    return response;
+}
