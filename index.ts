@@ -1,4 +1,4 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResultV2, Handler } from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyEventV2, APIGatewayProxyResultV2, Handler } from "aws-lambda";
 import * as _ from 'lodash';
 import * as AWS from 'aws-sdk';
 import { Knex } from 'knex';
@@ -38,12 +38,12 @@ const knex = require('knex')({
 //     return { status: 'OK', body: req }
 // });
 
-export const handler: Handler = async (event, context) => {   
+export const handler: Handler = async (event: APIGatewayProxyEventV2, context) => {   
     try {
         console.log('PATH', event['path']);
         // await knex('User').select('UserId');
         let user = await knex.select('*').from('User');
-        switch(event.rawPath) {
+        switch(event.requestContext.http.path) {
             case '/dev/user':
                 return userMethods(event);
             case '/dev/company':
@@ -69,7 +69,7 @@ export const handler: Handler = async (event, context) => {
     // return await app.run(event, context);
 };
 
-function userMethods(event: any) {
+function userMethods(event: APIGatewayProxyEventV2) {
     let response = {
         statusCode: 200,
         body: 'User Works'
@@ -78,7 +78,7 @@ function userMethods(event: any) {
     return response;
 }
 
-function companyMethods(event: any) {
+function companyMethods(event: APIGatewayProxyEventV2) {
     let response = {
         statusCode: 200,
         body: 'Company Works'
